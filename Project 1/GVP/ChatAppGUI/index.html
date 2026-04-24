@@ -15,6 +15,8 @@
     <div class="chat">
         <div id="chatBox" class="chat-box"></div>
 
+        <div class="chat-header">Chat Room</div>
+
         <div class="input-area">
             <input type="text" id="msg" placeholder="Type a message...">
             <button onclick="sendMessage()">Send</button>
@@ -22,10 +24,14 @@
     </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
+<!-- Your config FIRST -->
 <script src="firebase.js"></script>
+
+<!-- Your logic AFTER -->
 <script src="script.js"></script>
 
 </body>
