@@ -1,75 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Chatozz</title>
+  <meta charset="UTF-8">
+  <title>Chatozz - Professional Chat</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="brand">Chatozz</div>
-  <button id="themeToggle">🌞</button>
+<body class="dark-theme"> <div class="topbar">
+  <div>Chatozz</div>
+  <button id="themeToggle" class="theme-btn" onclick="toggleTheme()">🌙 Mode</button>
 </div>
 
 <div class="main">
-
-  <!-- LEFT: ROOMS -->
   <div class="rooms">
     <h3>Rooms</h3>
     <ul id="roomList"></ul>
   </div>
 
-  <!-- CENTER -->
   <div class="center">
+    <div id="userPanel" class="home">
+      <h2>Identify Yourself</h2>
+      <input id="userNameInput" placeholder="What's your name?">
+      <button class="primary-btn" onclick="setDisplayName()">Continue</button>
+    </div>
 
-    <!-- HOME -->
-    <div id="homePanel" class="panel">
-      <h2>Welcome to Chatozz</h2>
-
+    <div id="homePanel" class="home hidden">
+      <h2 id="welcomeText">Welcome to Chatozz</h2>
       <input id="roomName" placeholder="Room name">
-      <input id="roomPass" placeholder="Password" type="password">
-
-      <div class="btns">
-        <button onclick="createRoom()">Create Room</button>
-        <button onclick="joinRoom()">Join Room</button>
+      <input id="roomPass" type="password" placeholder="Password">
+      <div class="btn-group">
+        <button class="primary-btn" onclick="createRoom()">Create Room</button>
+        <button class="secondary-btn" onclick="joinRoom()">Join Room</button>
       </div>
     </div>
 
-    <!-- CHAT -->
-    <div id="chatPanel" class="panel hidden">
-
-      <!-- HEADER -->
+    <div id="chatPanel" class="chat hidden">
       <div class="chat-header">
         <span id="roomTitle"></span>
         <button class="leave-btn" onclick="leaveRoom()">Leave</button>
       </div>
-
       <div id="chatBox" class="chat-box"></div>
-
       <div class="input-area">
         <input id="msg" placeholder="Type message...">
-        <button onclick="sendMessage()">Send</button>
+        <button class="primary-btn" onclick="sendMessage()">Send</button>
       </div>
-
     </div>
-
   </div>
 
-  <!-- RIGHT: USERS -->
   <div class="users">
     <h3>Users</h3>
-    <ul id="users"></ul>
+    <div id="usersContainer"></div>
   </div>
-
 </div>
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script src="firebase.js"></script>
-<script src="script.js"></script>
+
+<script src="script.js"></script> [cite: 88, 103, 104]
 
 </body>
 </html>
