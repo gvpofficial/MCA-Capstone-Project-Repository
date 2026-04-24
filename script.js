@@ -1,109 +1,130 @@
-let username = prompt("Enter your name:");
+// 1. GLOBAL VARIABLES (Must be at the very top)
+let username = "";
 let currentRoom = null;
 
-// ENTER KEY
-document.addEventListener("keydown", e => {
-  if (e.key === "Enter") sendMessage();
-});
+// 2. USER IDENTIFICATION (Fixed Continue Button)
+function setDisplayName() {
+    const nameInput = document.getElementById("userNameInput").value.trim();
+    
+    if (!nameInput) {
+        alert("Please enter a name!");
+        return;
+    }
+    
+    username = nameInput;
+    document.getElementById("welcomeText").innerText = `Welcome ${username} to Chatozz`;
+    
+    // Hide name entry, show room panel
+    document.getElementById("userPanel").classList.add("hidden");
+    document.getElementById("homePanel").classList.remove("hidden");
+}
 
-// CREATE ROOM
+// 3. THEME TOGGLE
+function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById("themeToggle");
+    
+    if (body.classList.contains("dark-theme")) {
+        body.classList.replace("dark-theme", "light-theme");
+        btn.innerText = "☀️ Light";
+    } else {
+        body.classList.replace("light-theme", "dark-theme");
+        btn.innerText = "🌙 Dark";
+    }
+}
+
+// 4. ROOM LOGIC
 async function createRoom() {
-  let name = roomName.value;
-  let pass = roomPass.value;
+    const name = document.getElementById("roomName").value.trim();
+    const pass = document.getElementById("roomPass").value.trim();
+    if (!name || !pass) return alert("Enter room details");
 
-  if (!name || !pass) return alert("Enter details");
-
-  await db.ref("rooms/" + name).set({
-    password: pass
-  });
-
-  loadRooms();
+    await db.ref("rooms/" + name).set({ password: pass });
+    alert("Room created! You can now join it.");
 }
 
-// JOIN ROOM
 async function joinRoom() {
-  let name = roomName.value;
-  let pass = roomPass.value;
+    const name = document.getElementById("roomName").value.trim();
+    const pass = document.getElementById("roomPass").value.trim();
 
-  let snap = await db.ref("rooms/" + name).once("value");
+    const snap = await db.ref("rooms/" + name).once("value");
+    if (!snap.exists()) return alert("Room doesn't exist");
+    if (snap.val().password !== pass) return alert("Wrong password");
 
-  if (!snap.exists()) return alert("Room not found");
-  if (snap.val().password !== pass) return alert("Wrong password");
+    currentRoom = name;
+    document.getElementById("roomTitle").innerText = `Room: ${name}`;
+    document.getElementById("homePanel").classList.add("hidden");
+    document.getElementById("chatPanel").classList.remove("hidden");
 
-  currentRoom = name;
-
-  homePanel.classList.add("hidden");
-  chatPanel.classList.remove("hidden");
-  roomTitle.innerText = name;
-
-  // add user
-  db.ref(`rooms/${name}/users/${username}`).set(true);
-
-  // USERS LIST (FIXED)
-  db.ref(`rooms/${name}/users`).on("value", snap => {
-    users.innerHTML = "";
-    snap.forEach(u => {
-      let li = document.createElement("li");
-      li.innerText = u.key;
-      users.appendChild(li);
-    });
-  });
-
-  // MESSAGES
-  chatBox.innerHTML = "";
-  db.ref(`rooms/${name}/messages`).on("child_added", snap => {
-    showMessage(snap.val());
-  });
+    setupRoomListeners(name);
 }
 
-// SEND MESSAGE
+// 5. CHAT & PRESENCE LOGIC
+function setupRoomListeners(name) {
+    const chatBox = document.getElementById("chatBox");
+    
+    // Track User presence
+    const userRef = db.ref(`rooms/${name}/users/${username}`);
+    userRef.set(true);
+    userRef.onDisconnect().remove();
+
+    // Sync Active Users
+    db.ref(`rooms/${name}/users`).on("value", snap => {
+        const container = document.getElementById("usersContainer");
+        container.innerHTML = "";
+        snap.forEach(u => {
+            const div = document.createElement("div");
+            div.style.padding = "8px";
+            div.style.marginBottom = "5px";
+            div.style.background = "rgba(255,255,255,0.1)";
+            div.style.borderRadius = "5px";
+            div.innerText = u.key === username ? "You (Online)" : u.key;
+            container.appendChild(div);
+        });
+    });
+
+    // Sync Messages
+    chatBox.innerHTML = "";
+    db.ref(`rooms/${name}/messages`).on("child_added", snap => {
+        const msg = snap.val();
+        const div = document.createElement("div");
+        div.className = `message ${msg.user === username ? 'sent' : 'received'}`;
+        div.innerHTML = `<strong>${msg.user}</strong><br>${msg.text}`;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+}
+
 function sendMessage() {
-  if (!currentRoom) return;
+    const msgInput = document.getElementById("msg");
+    const text = msgInput.value.trim();
+    if (!currentRoom || !text) return;
 
-  let msg = document.getElementById("msg").value;
-  if (!msg.trim()) return;
-
-  db.ref(`rooms/${currentRoom}/messages`).push({
-    user: username,
-    text: msg
-  });
-
-  document.getElementById("msg").value = "";
-}
-
-// SHOW MESSAGE
-function showMessage(msg) {
-  let div = document.createElement("div");
-  div.classList.add("message");
-
-  if (msg.user === username) div.classList.add("sent");
-  else div.classList.add("received");
-
-  div.innerText = msg.user + ": " + msg.text;
-
-  chatBox.appendChild(div);
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-// LEAVE ROOM
-async function leaveRoom() {
-  await db.ref(`rooms/${currentRoom}/users/${username}`).remove();
-  location.reload();
-}
-
-// LOAD ROOMS LIST
-function loadRooms() {
-  db.ref("rooms").on("value", snap => {
-    roomList.innerHTML = "";
-    snap.forEach(r => {
-      let li = document.createElement("li");
-      li.innerText = r.key;
-      li.onclick = () => {
-        roomName.value = r.key;
-      };
-      roomList.appendChild(li);
+    db.ref(`rooms/${currentRoom}/messages`).push({
+        user: username,
+        text: text,
+        timestamp: Date.now()
     });
-  });
+    msgInput.value = "";
 }
 
-loadRooms();
+function leaveRoom() {
+    if (currentRoom) {
+        db.ref(`rooms/${currentRoom}/users/${username}`).remove();
+        location.reload(); 
+    }
+}
+
+// 6. INITIAL LOAD (Fetch existing rooms)
+db.ref("rooms").on("value", snap => {
+    const list = document.getElementById("roomList");
+    list.innerHTML = "";
+    snap.forEach(r => {
+        const li = document.createElement("li");
+        li.innerText = r.key;
+        li.style.cursor = "pointer";
+        li.style.padding = "5px 0";
+        li.onclick = () => { document.getElementById("roomName").value = r.key; };
+        list.appendChild(li);
+    });
+});
