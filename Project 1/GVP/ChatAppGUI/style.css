@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial;
+    background: #f2f2f7;
+}
+
+/* Layout */
+.app {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 25%;
+    background: #ffffff;
+    border-right: 1px solid #ddd;
+    padding: 15px;
+}
+
+.sidebar h3 {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+#users li {
+    list-style: none;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    background: #f2f2f7;
+    cursor: pointer;
+}
+
+#users li:hover {
+    background: #e5e5ea;
+}
+
+/* Chat Area */
+.chat {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Chat Box */
+.chat-box {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Message bubbles */
+.message {
+    max-width: 60%;
+    padding: 10px 14px;
+    margin: 6px 0;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Sent (blue bubble like iOS) */
+.sent {
+    align-self: flex-end;
+    background: #007aff;
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+
+/* Received (grey bubble) */
+.received {
+    align-self: flex-start;
+    background: #e5e5ea;
+    color: black;
+    border-bottom-left-radius: 5px;
+}
+
+/* Input area */
+.input-area {
+    display: flex;
+    padding: 10px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #ddd;
+}
+
+input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+}
+
+button {
+    margin-left: 10px;
+    padding: 10px 16px;
+    border-radius: 20px;
+    border: none;
+    background: #007aff;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #005ecb;
+}
+
+.chat-header {
+    padding: 15px;
+    font-weight: 600;
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
