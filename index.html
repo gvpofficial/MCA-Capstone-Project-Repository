@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatozz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand">Chatozz</div>
+  <button id="themeToggle">🌞</button>
+</div>
+
+<div class="main">
+
+  <!-- LEFT: ROOMS -->
+  <div class="rooms">
+    <h3>Rooms</h3>
+    <ul id="roomList"></ul>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HOME -->
+    <div id="homePanel" class="panel">
+      <h2>Welcome to Chatozz</h2>
+
+      <input id="roomName" placeholder="Room name">
+      <input id="roomPass" placeholder="Password" type="password">
+
+      <div class="btns">
+        <button onclick="createRoom()">Create Room</button>
+        <button onclick="joinRoom()">Join Room</button>
+      </div>
+    </div>
+
+    <!-- CHAT -->
+    <div id="chatPanel" class="panel hidden">
+
+      <!-- HEADER -->
+      <div class="chat-header">
+        <span id="roomTitle"></span>
+        <button class="leave-btn" onclick="leaveRoom()">Leave</button>
+      </div>
+
+      <div id="chatBox" class="chat-box"></div>
+
+      <div class="input-area">
+        <input id="msg" placeholder="Type message...">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- RIGHT: USERS -->
+  <div class="users">
+    <h3>Users</h3>
+    <ul id="users"></ul>
+  </div>
+
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script src="firebase.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

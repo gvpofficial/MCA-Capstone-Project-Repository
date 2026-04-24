@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+/* TOP BAR */
+.topbar {
+  height: 50px;
+  background: #202c33;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+
+/* MAIN */
+.main {
+  display: flex;
+  height: calc(100vh - 50px);
+}
+
+/* ROOMS */
+.rooms {
+  width: 20%;
+  background: #111b21;
+  color: white;
+  padding: 10px;
+}
+
+.rooms li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.rooms li:hover {
+  background: #202c33;
+}
+
+/* CENTER */
+.center {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel {
+  flex: 1;
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* CHAT HEADER */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  background: #202c33;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+}
+
+.leave-btn {
+  background: red;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* CHAT */
+.chat-box {
+  flex: 1;
+  background: #0b141a;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.message {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.sent {
+  align-self: flex-end;
+  background: #005c4b;
+  color: white;
+}
+
+.received {
+  align-self: flex-start;
+  background: #202c33;
+  color: white;
+}
+
+/* USERS */
+.users {
+  width: 20%;
+  background: #111b21;
+  color: white;
+  padding: 10px;
+}
+
+/* INPUT */
+.input-area {
+  display: flex;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 10px;
+}
+
+button {
+  cursor: pointer;
+}
