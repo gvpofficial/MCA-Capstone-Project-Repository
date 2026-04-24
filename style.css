@@ -110,14 +110,55 @@ input {
   gap: 15px;
 }
 
+/* CHAT INPUT BAR */
 .input-area {
   display: flex;
-  padding: 10px;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
   background: var(--bg-topbar);
+  border-top: 1px solid rgba(255,255,255,0.05);
 }
 
+/* INPUT FIELD */
 .input-area input {
   flex: 1;
+  padding: 12px 16px;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+/* INPUT FOCUS */
+.input-area input:focus {
+  box-shadow: 0 0 0 2px rgba(0,168,132,0.4);
+}
+
+/* SEND BUTTON */
+.input-area button {
+  background: var(--primary);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* HOVER */
+.input-area button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,168,132,0.4);
+}
+
+/* CLICK */
+.input-area button:active {
+  transform: scale(0.95);
 }
 
 .primary-btn {
