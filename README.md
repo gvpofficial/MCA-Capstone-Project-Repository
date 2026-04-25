@@ -1,56 +1,62 @@
-# Java OOP Chat Application (HTML/CSS UI)
+# Java OOP Chat Application
 
-This repository now contains a complete **chat application project** built with:
-- **Java** (backend server + OOP design)
-- **HTML/CSS/JavaScript** (frontend UI)
+This repository contains a complete chat application project built with **Java** (backend server + OOP design) and **HTML/CSS/JavaScript** (frontend UI). The application allows users to send chat messages with a name and content, and it provides live updates every 2 seconds using simple polling.
 
-## OOP Concepts Used
+## Object-Oriented Programming Concepts Used
 
-- **Abstraction**: `MessageStore` interface defines storage behavior.
-- **Inheritance**: `ChatMessage` extends abstract `Message`.
-- **Encapsulation**: classes keep fields private with getters/service methods.
-- **Polymorphism**: `ChatService` depends on `MessageStore` abstraction and can use any implementation.
+The following Object-Oriented Programming (OOP) concepts are used in this project:
+
+- **Abstraction**: The `MessageStore` interface defines the behavior required for message storage.
+- **Inheritance**: The `ChatMessage` class extends the abstract `Message` class.
+- **Encapsulation**: The classes keep their fields private and provide getter and service methods for accessing and manipulating the data.
+- **Polymorphism**: The `ChatService` class depends on the `MessageStore` abstraction and can use any implementation.
 
 ## Project Structure
 
-```text
-src/main/java/com/mca/chatapp/
-  ChatApplication.java
-  ChatService.java
-  Message.java
-  ChatMessage.java
-  MessageStore.java
-  InMemoryMessageStore.java
-public/
-  index.html
-  styles.css
-  app.js
+The project structure is as follows:
+
+```
+src/
+  main/
+    java/
+      com/
+        mca/
+          chatapp/
+            ChatApplication.java
+            ChatService.java
+            Message.java
+            ChatMessage.java
+            MessageStore.java
+            InMemoryMessageStore.java
+    resources/
+      public/
+        index.html
+        styles.css
+        app.js
 ```
 
 ## How to Run
 
-### 1) Compile
+To run the chat application, follow these steps:
 
-```bash
-mkdir -p out
-javac -d out src/main/java/com/mca/chatapp/*.java
-```
+1. **Compile the Java source code** by running the following command:
 
-### 2) Start Server
+   ```bash
+   javac -d out src/main/java/com/mca/chatapp/*.java
+   ```
 
-```bash
-java -cp out com.mca.chatapp.ChatApplication
-```
+2. **Start the server** by running the following command:
 
-### 3) Open in Browser
+   ```bash
+   java -cp out com.mca.chatapp.ChatApplication
+   ```
 
-Visit: [http://localhost:8080](http://localhost:8080)
+3. **Open the chat application** in your browser by visiting: [http://localhost:8080](http://localhost:8080)
 
 ## Features
 
-- Send chat messages with name + content
-- Live updates every 2 seconds (simple polling)
-- Clean responsive UI using HTML/CSS
-- Java backend API endpoints:
-  - `GET /api/messages`
-  - `POST /api/messages`
+The chat application provides the following features:
+
+- Send chat messages with a name and content.
+- Live updates every 2 seconds using simple polling.
+- Clean and responsive UI built using HTML/CSS.
